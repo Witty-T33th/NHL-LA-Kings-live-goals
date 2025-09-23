@@ -8,10 +8,92 @@
     h1 { color:#a2aaad; }
     #scoreboard { margin:20px; font-size:1.5em; }
     .team { display:inline-block; margin:0 20px; text-align:center; }
-    .team img { width:100px; display:block; margin:0 auto 10px; }
+    .team img { width:120px; display:block; margin:0 auto 10px; }
     .vs { font-size:2em; margin:0 15px; color:#888; }
     .status { margin-top:15px; font-size:1.2em; color:#bbb; }
     button { margin-top:30px; padding:10px 20px; font-size:1em; border:none; border-radius:8px; cursor:pointer; }
+    /*/Below code: Logo infinite looping\*/
+    body {  
+      margin: 0;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Sidebar setup */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      background: #222;
+    }
+    .sidebar.left { left: 0; }
+    .sidebar.right { right: 0; }
+
+    /* Scrolling container */
+    .scroll {
+      display: flex;
+      flex-direction: column;
+      animation: scroll-logos 10s linear infinite;
+    }
+
+    .scroll img {
+      width: 60px;
+      margin: 10px auto;
+    }
+
+    /* Keyframes for smooth infinite loop */
+    @keyframes scroll-logos {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Left sidebar -->
+  <div class="sidebar left">
+    <div class="scroll">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+
+      <!-- duplicate for seamless loop -->
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+    </div>
+  </div>
+
+  <!-- Right sidebar -->
+  <div class="sidebar right">
+    <div class="scroll">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+
+      <!-- duplicate for seamless loop -->
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
+    </div>
+  </div>
+     <!-- End of infinite looping -->
   </style>
 </head>
 <body>
@@ -36,19 +118,19 @@
       return `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${id}.svg`;
     }
 
-    async function fetchScore() {
+      async function fetchScore() {
       try {
-        const url = `https://statsapi.web.nhl.com/api/v1/schedule?teamId=${teamId}&expand=schedule.linescore`;
+        const today = new Date().toISOString().split("T")[0];
+        const url = `https://statsapi.web.nhl.com/api/v1/schedule?teamId=${teamId}&date=${today}&expand=schedule.linescore`;
         const response = await fetch(url);
         const data = await response.json();
 
-        const games = data.dates?.[0]?.games || [];
-        if (games.length === 0) {
-          scoreboard.textContent = "No games today.";
+        if (!data.dates || data.dates.length === 0) {
+          scoreboard.innerHTML = "<div class='status'>No LA Kings game today.</div>";
           return;
         }
 
-        const game = games[0];
+        const game = data.dates[0].games[0];
         const away = game.teams.away;
         const home = game.teams.home;
         const state = game.status.detailedState;
@@ -72,14 +154,75 @@
         `;
       } catch (err) {
         console.error(err);
-        scoreboard.textContent = "Error loading score.";
+        scoreboard.innerHTML = "<div class='status'>Error loading score.</div>";
       }
     }
 
     fetchScore();
-    setInterval(fetchScore, 30000);
+    setInterval(fetchScore, 30000); // refresh every 30s
   </script>
-
   
+ <script src="teams.js"></script>
+
+ <div class="sidebar left">
+  <div class="scroll">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+  </div>
+</div>
+
+<div class="sidebar right">
+  <div class="scroll">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
+  </div>
+</div>
+
+
+
 </body>
 </html>
