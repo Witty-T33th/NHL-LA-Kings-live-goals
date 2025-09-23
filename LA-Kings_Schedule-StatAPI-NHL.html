@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LA Kings Live + History</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#111; color:#fff; text-align:center; }
+    h1 { color:#a2aaad; }
+    #scoreboard { margin:20px; font-size:1.5em; }
+    .team { display:inline-block; margin:0 20px; text-align:center; }
+    .team img { width:100px; display:block; margin:0 auto 10px; }
+    .vs { font-size:2em; margin:0 15px; color:#888; }
+    .status { margin-top:15px; font-size:1.2em; color:#bbb; }
+    button { margin-top:30px; padding:10px 20px; font-size:1em; border:none; border-radius:8px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>LA Kings Live Scoreboard</h1>
+  <div id="scoreboard">Loading...</div>
+
+  <!-- Redirect button -->
+  <button onclick="window.location.href='https://www.espn.com/nhl/team/schedule/_/name/la/seasontype/2'">
+    See Previous Games & Goal Scorers
+  </button>
+
+<!-- Redirect button -->
+  <button onclick="window.location.href='https://www.espn.com/nhl/team/schedule/_/name/la/seasontype/1'">
+    See Previous Games & Goal Scorers (Preseason)
+  </button>
+
+  <script>
+    const teamId = 26;
+    const scoreboard = document.getElementById("scoreboard");
+
+    function getLogoUrl(id) {
+      return `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${id}.svg`;
+    }
+
+    async function fetchScore() {
+      try {
+        const url = `https://statsapi.web.nhl.com/api/v1/schedule?teamId=${teamId}&expand=schedule.linescore`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const games = data.dates?.[0]?.games || [];
+        if (games.length === 0) {
+          scoreboard.textContent = "No games today.";
+          return;
+        }
+
+        const game = games[0];
+        const away = game.teams.away;
+        const home = game.teams.home;
+        const state = game.status.detailedState;
+        const linescore = game.linescore || {};
+
+        scoreboard.innerHTML = `
+          <div class="team">
+            <img src="${getLogoUrl(away.team.id)}" alt="${away.team.name}">
+            <div>${away.team.name}</div>
+            <div><strong>${away.score}</strong></div>
+          </div>
+          <span class="vs">vs</span>
+          <div class="team">
+            <img src="${getLogoUrl(home.team.id)}" alt="${home.team.name}">
+            <div>${home.team.name}</div>
+            <div><strong>${home.score}</strong></div>
+          </div>
+          <div class="status">
+            ${state}${state.includes("In Progress") ? ` – Period ${linescore.currentPeriod}` : ""}
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+        scoreboard.textContent = "Error loading score.";
+      }
+    }
+
+    fetchScore();
+    setInterval(fetchScore, 30000);
+  </script>
+
+  
+</body>
+</html>
