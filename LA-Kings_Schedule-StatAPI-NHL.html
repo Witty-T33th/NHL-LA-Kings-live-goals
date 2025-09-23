@@ -2,126 +2,151 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>LA Kings Live + History</title>
+  <title>LA Kings Live</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#111; color:#fff; text-align:center; }
-    h1 { color:#a2aaad; }
+    body { font-family: Arial, sans-serif; background:#111; color:#fff; text-align:center; margin:0; }
+    h1 { color:#a2aaad; margin-top:20px; }
     #scoreboard { margin:20px; font-size:1.5em; }
     .team { display:inline-block; margin:0 20px; text-align:center; }
     .team img { width:120px; display:block; margin:0 auto 10px; }
     .vs { font-size:2em; margin:0 15px; color:#888; }
     .status { margin-top:15px; font-size:1.2em; color:#bbb; }
-    button { margin-top:30px; padding:10px 20px; font-size:1em; border:none; border-radius:8px; cursor:pointer; }
-    /*/Below code: Logo infinite looping\*/
-    body {  
-      margin: 0;
-      background: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
+    button { margin-top:20px; padding:10px 20px; font-size:1em; border:none; border-radius:8px; cursor:pointer; }
 
-    /* Sidebar setup */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      width: 80px;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      background: #222;
-    }
-    .sidebar.left { left: 0; }
-    .sidebar.right { right: 0; }
+    /* Sidebars */
+    .sidebar { position: fixed; top:0; bottom:0; width:80px; overflow:hidden; display:flex; justify-content:center; background:#222; }
+    .sidebar.left { left:0; }
+    .sidebar.right { right:0; }
 
-    /* Scrolling container */
-    .scroll {
-      display: flex;
-      flex-direction: column;
-      animation: scroll-logos 10s linear infinite;
-    }
+    .scroll { display:flex; flex-direction:column; animation: scroll-logos 45s linear infinite; }
+    .scroll img { width:60px; margin:10px auto; }
 
-    .scroll img {
-      width: 60px;
-      margin: 10px auto;
-    }
+    @keyframes scroll-logos { 0% { transform:translateY(0); } 100% { transform:translateY(-50%); } }
 
-    /* Keyframes for smooth infinite loop */
-    @keyframes scroll-logos {
-      0%   { transform: translateY(0); }
-      100% { transform: translateY(-50%); }
-    }
+/* Goal popup animation */
+@keyframes goal-popup {
+  0% { opacity: 0; transform: translateY(50px); }
+  10% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-50px); }
+}
+
+.goal-popup {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  font-size: 1.3em;
+  padding: 15px 25px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  animation: goal-popup 4s ease forwards;
+  z-index: 9999;
+}
+
+.goal-popup img {
+  width: 40px;
+  height: 40px;
+}
   </style>
 </head>
 <body>
+
   <!-- Left sidebar -->
   <div class="sidebar left">
     <div class="scroll">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
       <!-- duplicate for seamless loop -->
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
     </div>
   </div>
 
   <!-- Right sidebar -->
   <div class="sidebar right">
     <div class="scroll">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
       <!-- duplicate for seamless loop -->
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
-      <img src="logo.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
+      <img src="LOGO.png" alt="Logo">
     </div>
   </div>
-     <!-- End of infinite looping -->
-  </style>
-</head>
-<body>
+
   <h1>LA Kings Live Scoreboard</h1>
   <div id="scoreboard">Loading...</div>
 
-  <!-- Redirect button -->
-  <button onclick="window.location.href='https://www.espn.com/nhl/team/schedule/_/name/la/seasontype/2'">
+  <!-- Buttons open in new tab -->
+  <button onclick="window.open('https://www.espn.com/nhl/team/schedule/_/name/la/seasontype/2','_blank')">
     See Previous Games & Goal Scorers
   </button>
-
-<!-- Redirect button -->
-  <button onclick="window.location.href='https://www.espn.com/nhl/team/schedule/_/name/la/seasontype/1'">
+  <button onclick="window.open('https://www.espn.com/nhl/team/schedule/_/name/la/seasontype/1','_blank')">
     See Previous Games & Goal Scorers (Preseason)
   </button>
-
+ 
+   <!-- Score board -->
   <script>
-    const teamId = 26;
     const scoreboard = document.getElementById("scoreboard");
 
-    function getLogoUrl(id) {
-      return `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${id}.svg`;
+    // Load team logos from JSON
+    let teamsData = [];
+    fetch("team2.json")
+      .then(response => response.json())
+      .then(data => { teamsData = data; fetchScore(); setInterval(fetchScore, 30000); })
+      .catch(err => console.error(err));
+
+    function getLogoById(id) {
+      const team = teamsData.find(t => t.teamId === id);
+      return team ? team.logo : "";
     }
 
-      async function fetchScore() {
+    async function fetchScore() {
+      if (!teamsData.length) return;
       try {
         const today = new Date().toISOString().split("T")[0];
-        const url = `https://statsapi.web.nhl.com/api/v1/schedule?teamId=${teamId}&date=${today}&expand=schedule.linescore`;
+        const url = `https://statsapi.web.nhl.com/api/v1/schedule?teamId=26&date=${today}&expand=schedule.linescore`;
         const response = await fetch(url);
         const data = await response.json();
 
@@ -138,13 +163,13 @@
 
         scoreboard.innerHTML = `
           <div class="team">
-            <img src="${getLogoUrl(away.team.id)}" alt="${away.team.name}">
+            <img src="${getLogoById(away.team.id)}" alt="${away.team.name}">
             <div>${away.team.name}</div>
             <div><strong>${away.score}</strong></div>
           </div>
           <span class="vs">vs</span>
           <div class="team">
-            <img src="${getLogoUrl(home.team.id)}" alt="${home.team.name}">
+            <img src="${getLogoById(home.team.id)}" alt="${home.team.name}">
             <div>${home.team.name}</div>
             <div><strong>${home.score}</strong></div>
           </div>
@@ -152,77 +177,85 @@
             ${state}${state.includes("In Progress") ? ` – Period ${linescore.currentPeriod}` : ""}
           </div>
         `;
-      } catch (err) {
+      } catch(err) {
         console.error(err);
         scoreboard.innerHTML = "<div class='status'>Error loading score.</div>";
       }
     }
-
-    fetchScore();
-    setInterval(fetchScore, 30000); // refresh every 30s
   </script>
-  
- <script src="teams.js"></script>
 
- <div class="sidebar left">
-  <div class="scroll">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-  </div>
-</div>
+ 
+<!-- Automatic Goal showing Player, NAme, Team -->
+ <script>
+   const teamId = 26; // LA Kings
+let knownGoals = new Set(); // store already seen goal IDs
 
-<div class="sidebar right">
-  <div class="scroll">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-    <img src="logo.png" alt="Logo">
-  </div>
-</div>
+async function fetchLiveGame() {
+  try {
+    const today = new Date().toISOString().split("T")[0];
+    // Get today's game schedule
+    const scheduleUrl = `https://statsapi.web.nhl.com/api/v1/schedule?teamId=${teamId}&date=${today}`;
+    const scheduleResp = await fetch(scheduleUrl);
+    const scheduleData = await scheduleResp.json();
 
+    if (!scheduleData.dates || scheduleData.dates.length === 0) return;
 
+    const game = scheduleData.dates[0].games[0];
+    const gamePk = game.gamePk;
 
+    // Get live game data
+    const liveUrl = `https://statsapi.web.nhl.com/api/v1/game/${gamePk}/feed/live`;
+    const liveResp = await fetch(liveUrl);
+    const liveData = await liveResp.json();
+
+    // Iterate over all scoring plays
+    const scoringPlays = liveData.liveData.plays.scoringPlays || [];
+    scoringPlays.forEach(playIndex => {
+      const play = liveData.liveData.plays.allPlays[playIndex];
+      const goalId = play.about.eventId;
+
+      if (!knownGoals.has(goalId)) {
+        // New goal detected!
+        knownGoals.add(goalId);
+        const player = play.players.find(p => p.playerType === "Scorer");
+        if (player) {
+          showGoal(player.player.fullName, player.player.jerseyNumber, play.team.id);
+        }
+      }
+    });
+
+    // Update scoreboard too
+    const away = game.teams.away;
+    const home = game.teams.home;
+    const state = game.status.detailedState;
+    const linescore = game.linescore || {};
+    document.getElementById("scoreboard").innerHTML = `
+      <div class="team">
+        <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${away.team.id}.svg" alt="${away.team.name}">
+        <div>${away.team.name}</div>
+        <div><strong>${away.score}</strong></div>
+      </div>
+      <span class="vs">vs</span>
+      <div class="team">
+        <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${home.team.id}.svg" alt="${home.team.name}">
+        <div>${home.team.name}</div>
+        <div><strong>${home.score}</strong></div>
+      </div>
+      <div class="status">
+        ${state}${state.includes("In Progress") ? ` – Period ${linescore.currentPeriod}` : ""}
+      </div>
+    `;
+
+  } catch (err) {
+    console.error("Error fetching live game:", err);
+  }
+}
+
+// Run immediately and every 15 seconds
+fetchLiveGame();
+setInterval(fetchLiveGame, 15000);
+
+</script>
 </body>
 </html>
+
