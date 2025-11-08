@@ -28,10 +28,13 @@ const nhlTeams = {
   29: "Columbus Blue Jackets",
   30: "Minnesota Wild",
   52: "Winnipeg Jets",
-  53: "Arizona Coyotes",
   54: "Vegas Golden Knights",
-  55: "Seattle Kraken"
+  55: "Seattle Kraken",
+  56: "Utah Hockey Club"
 };
 
-const teamId = 26; // example
+// Example usage
+const teamId = 26;
 console.log("Selected:", nhlTeams[teamId]);
+
+
