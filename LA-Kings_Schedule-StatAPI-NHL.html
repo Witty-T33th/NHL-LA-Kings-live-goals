@@ -11,8 +11,6 @@
     .team img { width:120px; display:block; margin:0 auto 10px; }
     .vs { font-size:2em; margin:0 15px; color:#888; }
     .status { margin-top:15px; font-size:1.2em; color:#bbb; }
-    .top-scorer { margin-top:10px; font-size:1em; color:#ffd700; }
-
     button { margin-top:20px; padding:10px 20px; font-size:1em; border:none; border-radius:8px; cursor:pointer; }
 
     /* Sidebars */
@@ -24,19 +22,53 @@
     @keyframes scroll-logos { 0% { transform:translateY(0); } 100% { transform:translateY(-50%); } }
 
     /* Goal popup animation */
-    @keyframes goal-popup { 0% { opacity:0; transform:translateY(50px); } 10% { opacity:1; transform:translateY(0); } 80% { opacity:1; transform:translateY(0); } 100% { opacity:0; transform:translateY(-50px); } }
-    .goal-popup { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background:#222; color:#fff; font-size:1.3em; padding:15px 25px; border-radius:12px; display:flex; align-items:center; gap:10px; box-shadow:0 0 15px rgba(0,0,0,0.5); animation:goal-popup 4s ease forwards; z-index:9999; }
-    .goal-popup img { width:40px; height:40px; }
+    @keyframes goal-popup {
+      0% { opacity: 0; transform: translateY(50px); }
+      10% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-50px); }
+    }
+    .goal-popup {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #222;
+      color: #fff;
+      font-size: 1.3em;
+      padding: 15px 25px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      animation: goal-popup 4s ease forwards;
+      z-index: 9999;
+    }
+    .goal-popup img { width: 40px; height: 40px; }
 
-    /* Ice rink animation */
-    .ice-rink { position: fixed; bottom:0; left:0; width:100%; height:120px; background:#0a2d48; overflow:hidden; display:flex; align-items:center; }
-    .skater { position:absolute; bottom:10px; width:80px; animation: skate 12s linear infinite; }
-    .skater:nth-child(2) { animation-delay:3s; }
-    .skater:nth-child(3) { animation-delay:6s; }
-    @keyframes skate { 0% { left:-100px; } 100% { left:100%; } }
-
-    /* Countdown */
-    #countdown { margin-top:15px; font-size:1.2em; color:#ffa500; }
+    /* Ice rink animation for player faces */
+    .ice-rink {
+      position: fixed;
+      bottom: 50px;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .skater {
+      position: absolute;
+      bottom: 0;
+      width: 60px;
+      border-radius: 50%;
+      animation: skate linear infinite;
+    }
+    @keyframes skate {
+      0% { transform: translateX(-80px); }
+      100% { transform: translateX(100vw); }
+    }
   </style>
 </head>
 <body>
@@ -44,41 +76,31 @@
   <!-- Left sidebar -->
   <div class="sidebar left">
     <div class="scroll">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <!-- duplicate for seamless loop -->
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <!-- duplicate once for seamless scroll -->
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
     </div>
   </div>
 
   <!-- Right sidebar -->
   <div class="sidebar right">
     <div class="scroll">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
-      <!-- duplicate for seamless loop -->
-      <img src="LOGO.png" alt="Logo">
-      <img src="LOGO.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <!-- duplicate once -->
+      <img src="LA_Kings_Logo.png" alt="Logo">
+      <img src="LA_Kings_Logo.png" alt="Logo">
     </div>
   </div>
 
   <h1>LA Kings Live Scoreboard</h1>
   <div id="scoreboard">Loading...</div>
-  <div id="countdown"></div>
-  <div class="top-scorer" id="top-scorer"></div>
 
   <button onclick="window.open('https://www.espn.com/nhl/team/schedule/_/name/la/seasontype/2','_blank')">
     See Previous Games & Goal Scorers
@@ -87,13 +109,11 @@
     See Previous Games & Goal Scorers (Preseason)
   </button>
 
-  <!-- Ice rink -->
-  <div class="ice-rink">
-    <img src="skater1.png" class="skater">
-    <img src="skater2.png" class="skater">
-    <img src="skater3.png" class="skater">
-  </div>
+  <!-- Ice rink container -->
+  <div class="ice-rink" id="ice-rink"></div>
 
+  <!-- JS files -->
   <script src="liveScore.js"></script>
+  <script src="iceRink.js"></script>
 </body>
 </html>
