@@ -11,48 +11,32 @@
     .team img { width:120px; display:block; margin:0 auto 10px; }
     .vs { font-size:2em; margin:0 15px; color:#888; }
     .status { margin-top:15px; font-size:1.2em; color:#bbb; }
+    .top-scorer { margin-top:10px; font-size:1em; color:#ffd700; }
+
     button { margin-top:20px; padding:10px 20px; font-size:1em; border:none; border-radius:8px; cursor:pointer; }
 
     /* Sidebars */
     .sidebar { position: fixed; top:0; bottom:0; width:80px; overflow:hidden; display:flex; justify-content:center; background:#222; }
     .sidebar.left { left:0; }
     .sidebar.right { right:0; }
-
     .scroll { display:flex; flex-direction:column; animation: scroll-logos 45s linear infinite; }
     .scroll img { width:60px; margin:10px auto; }
-
     @keyframes scroll-logos { 0% { transform:translateY(0); } 100% { transform:translateY(-50%); } }
 
     /* Goal popup animation */
-    @keyframes goal-popup {
-      0% { opacity: 0; transform: translateY(50px); }
-      10% { opacity: 1; transform: translateY(0); }
-      80% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-50px); }
-    }
+    @keyframes goal-popup { 0% { opacity:0; transform:translateY(50px); } 10% { opacity:1; transform:translateY(0); } 80% { opacity:1; transform:translateY(0); } 100% { opacity:0; transform:translateY(-50px); } }
+    .goal-popup { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background:#222; color:#fff; font-size:1.3em; padding:15px 25px; border-radius:12px; display:flex; align-items:center; gap:10px; box-shadow:0 0 15px rgba(0,0,0,0.5); animation:goal-popup 4s ease forwards; z-index:9999; }
+    .goal-popup img { width:40px; height:40px; }
 
-    .goal-popup {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #222;
-      color: #fff;
-      font-size: 1.3em;
-      padding: 15px 25px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      animation: goal-popup 4s ease forwards;
-      z-index: 9999;
-    }
+    /* Ice rink animation */
+    .ice-rink { position: fixed; bottom:0; left:0; width:100%; height:120px; background:#0a2d48; overflow:hidden; display:flex; align-items:center; }
+    .skater { position:absolute; bottom:10px; width:80px; animation: skate 12s linear infinite; }
+    .skater:nth-child(2) { animation-delay:3s; }
+    .skater:nth-child(3) { animation-delay:6s; }
+    @keyframes skate { 0% { left:-100px; } 100% { left:100%; } }
 
-    .goal-popup img {
-      width: 40px;
-      height: 40px;
-    }
+    /* Countdown */
+    #countdown { margin-top:15px; font-size:1.2em; color:#ffa500; }
   </style>
 </head>
 <body>
@@ -60,7 +44,6 @@
   <!-- Left sidebar -->
   <div class="sidebar left">
     <div class="scroll">
-      <!-- Example logos, repeat as needed -->
       <img src="LOGO.png" alt="Logo">
       <img src="LOGO.png" alt="Logo">
       <img src="LOGO.png" alt="Logo">
@@ -68,8 +51,8 @@
       <img src="LOGO.png" alt="Logo">
       <img src="LOGO.png" alt="Logo">
       <img src="LOGO.png" alt="Logo">
-      <!-- duplicate for smooth scroll -->
       <img src="LOGO.png" alt="Logo">
+      <!-- duplicate for seamless loop -->
       <img src="LOGO.png" alt="Logo">
       <img src="LOGO.png" alt="Logo">
     </div>
@@ -85,8 +68,8 @@
       <img src="LOGO.png" alt="Logo">
       <img src="LOGO.png" alt="Logo">
       <img src="LOGO.png" alt="Logo">
-      <!-- duplicate for smooth scroll -->
       <img src="LOGO.png" alt="Logo">
+      <!-- duplicate for seamless loop -->
       <img src="LOGO.png" alt="Logo">
       <img src="LOGO.png" alt="Logo">
     </div>
@@ -94,6 +77,8 @@
 
   <h1>LA Kings Live Scoreboard</h1>
   <div id="scoreboard">Loading...</div>
+  <div id="countdown"></div>
+  <div class="top-scorer" id="top-scorer"></div>
 
   <button onclick="window.open('https://www.espn.com/nhl/team/schedule/_/name/la/seasontype/2','_blank')">
     See Previous Games & Goal Scorers
@@ -102,132 +87,13 @@
     See Previous Games & Goal Scorers (Preseason)
   </button>
 
-  <script>
-    const teamId = 26; // LA Kings
-    const scoreboard = document.getElementById("scoreboard");
+  <!-- Ice rink -->
+  <div class="ice-rink">
+    <img src="skater1.png" class="skater">
+    <img src="skater2.png" class="skater">
+    <img src="skater3.png" class="skater">
+  </div>
 
-    // ---------------- Scoreboard Fetch ----------------
-    async function fetchScore() {
-      try {
-        const today = new Date().toISOString().split("T")[0];
-        const url = `https://statsapi.web.nhl.com/api/v1/schedule?teamId=${teamId}&date=${today}&expand=schedule.linescore`;
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (!data.dates || data.dates.length === 0) {
-          scoreboard.innerHTML = "<div class='status'>No LA Kings game today.</div>";
-          return;
-        }
-
-        const game = data.dates[0].games[0];
-        const away = game.teams.away;
-        const home = game.teams.home;
-        const state = game.status.detailedState;
-        const linescore = game.linescore || {};
-
-        scoreboard.innerHTML = `
-          <div class="team">
-            <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${away.team.id}.svg" alt="${away.team.name}">
-            <div>${away.team.name}</div>
-            <div><strong>${away.score}</strong></div>
-          </div>
-          <span class="vs">vs</span>
-          <div class="team">
-            <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${home.team.id}.svg" alt="${home.team.name}">
-            <div>${home.team.name}</div>
-            <div><strong>${home.score}</strong></div>
-          </div>
-          <div class="status">
-            ${state}${state.includes("In Progress") ? ` – Period ${linescore.currentPeriod}` : ""}
-          </div>
-        `;
-      } catch (err) {
-        console.error(err);
-        scoreboard.innerHTML = "<div class='status'>Error loading score.</div>";
-      }
-    }
-
-    fetchScore();
-    setInterval(fetchScore, 30000); // refresh every 30s
-
-    // ---------------- Goal Popup ----------------
-    function showGoal(playerName, playerNumber, teamId) {
-      const logoUrl = `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${teamId}.svg`;
-
-      const popup = document.createElement('div');
-      popup.className = 'goal-popup';
-      popup.innerHTML = `
-        <img src="${logoUrl}" alt="Team Logo">
-        <strong>GOAL!</strong> ${playerName} (#${playerNumber})
-      `;
-
-      document.body.appendChild(popup);
-
-      setTimeout(() => popup.remove(), 12000); // remove after 12s
-    }
-
-    // ---------------- Live Game Fetch ----------------
-    let knownGoals = new Set(); // already seen goals
-
-    async function fetchLiveGame() {
-      try {
-        const today = new Date().toISOString().split("T")[0];
-        const scheduleUrl = `https://statsapi.web.nhl.com/api/v1/schedule?teamId=${teamId}&date=${today}`;
-        const scheduleResp = await fetch(scheduleUrl);
-        const scheduleData = await scheduleResp.json();
-
-        if (!scheduleData.dates || scheduleData.dates.length === 0) return;
-
-        const game = scheduleData.dates[0].games[0];
-        const gamePk = game.gamePk;
-
-        const liveUrl = `https://statsapi.web.nhl.com/api/v1/game/${gamePk}/feed/live`;
-        const liveResp = await fetch(liveUrl);
-        const liveData = await liveResp.json();
-
-        const scoringPlays = liveData.liveData.plays.scoringPlays || [];
-        scoringPlays.forEach(playIndex => {
-          const play = liveData.liveData.plays.allPlays[playIndex];
-          const goalId = play.about.eventId;
-
-          if (!knownGoals.has(goalId)) {
-            knownGoals.add(goalId);
-            const player = play.players.find(p => p.playerType === "Scorer");
-            if (player) {
-              showGoal(player.player.fullName, player.player.jerseyNumber, play.team.id);
-            }
-          }
-        });
-
-        // Update scoreboard dynamically
-        const away = game.teams.away;
-        const home = game.teams.home;
-        const state = game.status.detailedState;
-        const linescore = game.linescore || {};
-        scoreboard.innerHTML = `
-          <div class="team">
-            <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${away.team.id}.svg" alt="${away.team.name}">
-            <div>${away.team.name}</div>
-            <div><strong>${away.score}</strong></div>
-          </div>
-          <span class="vs">vs</span>
-          <div class="team">
-            <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${home.team.id}.svg" alt="${home.team.name}">
-            <div>${home.team.name}</div>
-            <div><strong>${home.score}</strong></div>
-          </div>
-          <div class="status">
-            ${state}${state.includes("In Progress") ? ` – Period ${linescore.currentPeriod}` : ""}
-          </div>
-        `;
-      } catch (err) {
-        console.error("Error fetching live game:", err);
-      }
-    }
-
-    fetchLiveGame();
-    setInterval(fetchLiveGame, 15000); // refresh every 15s
-
-  </script>
+  <script src="liveScore.js"></script>
 </body>
 </html>
